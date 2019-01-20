@@ -80,7 +80,7 @@ class VPNGuard extends PluginBase implements Listener {
 
             if ( ($range != null) && (count($range) == 2)) {
                 if (($iplong <= (ip2long($range[1]))) && ((ip2long($range[0])) <= $iplong)) {
-                    $player->close("",$this->cfg["ban-message"]);
+                    $player->kick($this->cfg["ban-message"]);
 
                     if($this->cfg["logging"]) {
                         $this->getLogger()->info(TextFormat::DARK_RED . $player->getName() . TextFormat::WHITE .

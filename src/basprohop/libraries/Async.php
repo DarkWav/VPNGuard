@@ -48,9 +48,8 @@ class Async extends AsyncTask
         $this->cache = serialize($this->cache);
     }
 
-    public function onCompletion() : void
+    public function onCompletion(Server $server) : void
         {
-        $server = Server::getInstance();
         $this->cache = unserialize($this->cache);
         $this->data = unserialize($this->data);
         $obj = json_decode($this->data, true);
@@ -94,7 +93,7 @@ class Async extends AsyncTask
                 if(strtolower($this->cfg["country_mode"]) === "blacklist") {
                   if( ($player instanceof Player)) {
 
-                    $player->close("",$this->cfg["country_ban-message"]);
+                    $player->kick($this->cfg["country_ban-message"]);
 
                     if($this->cfg["logging"]) {
                         $server->getLogger()->info(TextFormat::DARK_RED . $player->getName() . TextFormat::WHITE .
@@ -107,7 +106,7 @@ class Async extends AsyncTask
                 if(strtolower($this->cfg["country_mode"]) === "whitelist") {
                   if( ($player instanceof Player)) {
 
-                    $player->close("",$this->cfg["country_ban-message"]);
+                    $player->kick($this->cfg["country_ban-message"]);
 
                     if($this->cfg["logging"]) {
                         $server->getLogger()->info(TextFormat::DARK_RED . $player->getName() . TextFormat::WHITE .
@@ -126,7 +125,7 @@ class Async extends AsyncTask
           if(empty($obj)) {
             $server->getLogger()->critical("API Server Seems to be Down");
             if (!$this->cfg["bypass-check"]) {
-                $player->close("",$this->cfg["bypass-message"]);
+                $player->kick($this->cfg["bypass-message"]);
             }
           } else {
             if ($obj['status'] === "success") {
@@ -172,7 +171,7 @@ class Async extends AsyncTask
                       return;
                   } else {
                       if (!$this->cfg["bypass-check"]) {
-                          $player->close("",$this->cfg["bypass-message"]);
+                          $player->kick("",$this->cfg["bypass-message"]);
                       }
                   }
               }
