@@ -12,30 +12,7 @@ class CommandFunctions {
     public function __construct(VPNGuard $plugin){
         $this->plugin = $plugin;
     }
-    
-    //Hack arround pocketmine randomly crashing......
-    public function hasSecurePermission($player, $permission) : bool
-    {
-      if ($player instanceof Player)
-      {
-        if (!$player->isClosed())
-        {
-          if ($player->hasPermission($permission))
-          {
-            return true;
-          }
-          else
-          {
-            return false;
-          }
-        }
-      }
-      else
-      {
-        return true;
-      }
-    }
-    //End Hack
+
     /**
      * Function that is executed when /vpnguard about is invoked.
      * Displays information regarding the plugin and shows commands available to the user.
@@ -43,25 +20,25 @@ class CommandFunctions {
      */
     public function cmdEmpty(CommandSender $sender) {
         $sender->sendMessage($this->plugin->msg("VPNGuard Command List"));
-        if($this->hasSecurePermission($sender, "vpnguard.command.vpnguard")) {
+        if($sender->hasPermission("vpnguard.command.vpnguard")) {
             if($this->plugin->cache instanceof SimpleCache) {
-              if($this->hasSecurePermission($sender, "vpnguard.command.clearcache")) {
+              if($sender->hasPermission("vpnguard.command.clearcache")) {
                   $sender->sendMessage($this->plugin->msg("/vpnguard clearcache"));
               }
-              if($this->hasSecurePermission($sender, "vpnguard.command.clearip")) {
+              if($sender->hasPermission("vpnguard.command.clearip")) {
                   $sender->sendMessage($this->plugin->msg("/vpnguard clearip <ipv4 address>"));
               }
             }
-            if($this->hasSecurePermission($sender, "vpnguard.command.lookup")) {
+            if($sender->hasPermission("vpnguard.command.lookup")) {
                 $sender->sendMessage($this->plugin->msg("/vpnguard lookup <ipv4 address>"));
             }
-            if($this->hasSecurePermission($sender, "vpnguard.command.subnet")) {
+            if($sender->hasPermission("vpnguard.command.subnet")) {
                 $sender->sendMessage($this->plugin->msg("/vpnguard subnet <ban/unban> <ipv4 address/subnet>"));
             }
-            if($this->hasSecurePermission($sender, "vpnguard.command.country")) {
+            if($sender->hasPermission("vpnguard.command.country")) {
                 $sender->sendMessage($this->plugin->msg("/vpnguard country <add/remove> <country code>"));
             }
-            if($this->hasSecurePermission($sender, "vpnguard.command.about")) {
+            if($sender->hasPermission("vpnguard.command.about")) {
                 $sender->sendMessage($this->plugin->msg("/vpnguard about"));
             }
         } else {
