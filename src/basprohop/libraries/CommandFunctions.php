@@ -132,6 +132,7 @@ class CommandFunctions {
             $sender->sendMessage($this->plugin->msg("API Request Caching: " . TextFormat::GRAY . "DISABLED"));
         }
         $sender->sendMessage($this->plugin->msg("API Homepage: " . TextFormat::AQUA . "http://xioax.com/host-blocker/"));
+        $sender->sendMessage($this->plugin->msg("LTS Patch by DarkWav: " . TextFormat::LIGHT_PURPLE . "API_3.0.0_v3"));
 
     }
 

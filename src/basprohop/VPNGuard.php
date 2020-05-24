@@ -25,11 +25,14 @@ class VPNGuard extends PluginBase implements Listener {
         @mkdir($this->getDataFolder());
         $this->saveDefaultConfig();
         $this->cfg = $this->getConfig()->getAll();
+        $this->saveResource("whitelist.yml", false);
         $this->subnet_list = new Config($this->getDataFolder() . "banned.yml", Config::YAML);
         $this->country_list = new Config($this->getDataFolder() . "countries.yml", Config::YAML);
+        $this->whitelist = new Config($this->getDataFolder() . "whitelist.yml", Config::YAML);
 
         $this->subnets = $this->subnet_list->get("subnets", []);
         $this->countries = $this->country_list->get("country_codes", []);
+        $this->whitelisted_players = $this->whitelist->get("whitelist", []);
 
         $configCommands = $this->cfg["command"];
         foreach ($configCommands as $configCommand) {
@@ -68,6 +71,11 @@ class VPNGuard extends PluginBase implements Listener {
     public function onPlayerLogin(PlayerJoinEvent $event) {
         $player = $event->getPlayer();
         $ipAddress = $player->getAddress();
+        
+        if(in_array($player->getName(), (array)$this->whitelisted_players)) {
+            $this->getLogger()->info(TEXTFormat::GREEN . $player->getName() . TextFormat::WHITE . " was excluded from VPNGuard checks.");
+            return;
+        }
 
         if ($this->cfg["logging"]) {
             $this->getLogger()->info(TextFormat::WHITE . "Player " . TextFormat::GOLD . $player->getName() .

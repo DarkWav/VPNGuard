@@ -1,0 +1,17 @@
+## VPN GUARD (MC Pocket Edition) ##
+## Developed for Server Software: PocketMine ##
+
+# Whitelist for players which should be excluded from VPNGuard checks.
+# Example:
+#
+# whitelist: ["NameOfAdmin", "NameOfFalseBlockedPlayer", "NameOfModerator"]
+#
+# OR:
+#
+# whitelist: 
+#     - "NameOfAdmin"
+#     - "NameOfFalseBlockedPlayer"
+#     - "NameOfModerator"
+
+whitelist: []
+
